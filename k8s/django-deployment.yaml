@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: django
+spec:
+  ports:
+  - port: 80
+    targetPort: 8000
+    protocol: TCP
+  type: NodePort
+  selector:
+    service: django
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: django
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        service: django
+    spec:
+      containers:
+      - name: django
+        image: wildfish/django-starter-sample
+        env:
+        - name: DJANGO_CONFIGURATION
+          value: Prod
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: postgres-password
+        - name: GCS_BUCKET
+          value: media.someexample.com
+        - name: GCS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: credentials
+              key: gcs-key
+        ports:
+        - containerPort: 8000
