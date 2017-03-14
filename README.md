@@ -1,6 +1,6 @@
 # Kubernetes Django Starter
 
-Example Kubernetes manifests to create a Django project.
+Example Kubernetes manifests to create a Django project. For a walktrhough on how to get this up and running on Google Container Engine (GKE) please see https://wildfish.com/blog/2017/03/14/django-google-container-engine-gke/.
 
 This is created to work with our Django starter project at https://github.com/wildfish/wildfish-django-starter/ so projects based on that should work out of the box, otherwise there are a few environment variables and secrets to configure as described below. It's presumed that the Django container runs on port 8000.
 
